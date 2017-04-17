@@ -1,0 +1,17 @@
+version: '2'
+services:
+  wordpress:
+    build: .
+    volumes:
+      - ./wp-content:/var/www/wp-content
+    env_file: .env
+    ports:
+      - "80:80"
+      - "9000:9000"
+    links:
+      - mysql
+  mysql:
+    image: mariadb:5.5
+    volumes:
+      - ./mysql:/var/lib/mysql
+    env_file: .env
