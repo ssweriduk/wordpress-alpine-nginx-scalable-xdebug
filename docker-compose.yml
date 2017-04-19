@@ -4,10 +4,12 @@ services:
     build: .
     volumes:
       - ./wp-content:/var/www/wp-content
+      - ./wordpress:/usr/src/wordpress
     env_file: .env
+    expose:
+      - "9000"
     ports:
       - "80:80"
-      - "9000:9000"
     links:
       - mysql
   mysql:
