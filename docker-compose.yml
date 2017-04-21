@@ -14,6 +14,15 @@ services:
       - mysql
   mysql:
     image: mariadb:5.5
+    ports:
+      - "3306:3306"
     volumes:
       - ./mysql:/var/lib/mysql
     env_file: .env
+  ngrok:
+    image: fnichol/ngrok
+    links:
+      - wordpress:http
+    env_file: .env
+    ports:
+      - "4040:4040"
