@@ -20,7 +20,7 @@ services:
       - ./mysql:/var/lib/mysql
     env_file: .env
   ngrok:
-    image: fnichol/ngrok
+    image: wernight/ngrok
     links:
       - wordpress:http
     env_file: .env
