@@ -3,8 +3,8 @@ services:
   wordpress:
     build: .
     volumes:
-      - ./wp-content:/var/www/wp-content
-      - ./wordpress:/usr/src/wordpress
+      - ~/Documents/Docker/FiKickDev/wp-content:/var/www/wp-content
+      - ~/Documents/Docker/FiKickDev/wordpress:/usr/src/wordpress
     env_file: .env
     expose:
       - "9000"
@@ -17,7 +17,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ~/Documents/Docker/FiKickDev/mysql:/var/lib/mysql
     env_file: .env
   ngrok:
     image: wernight/ngrok
