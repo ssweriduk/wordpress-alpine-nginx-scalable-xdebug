@@ -2,12 +2,9 @@ FROM ssweriduk/wordpress-alpine-nginx-scalable:latest
 MAINTAINER Stephen Sweriduk <ssweriduk@gmail.com>
 
 ENV \
-    # Display errors for easier debugging
-    PHP_DISPLAY_ERRORS="on" \
     # Directory to store xdebug profiling
     XDEBUG_DIR="/tmp/xdebug" \
     # Use OSX IP address loopback hack: https://gist.githubusercontent.com/ralphschindler/535dc5916ccbd06f53c1b0ee5a868c93/raw/com.ralphschindler.docker_10254_alias.plist
-    # This can be overridden by you
     XDEBUG_REMOTE_HOST="10.254.254.254" \
     XDEBUG_REMOTE_PORT="9000" \
     # You can enable this env to allow profiling your application with xdebug trigger
@@ -28,7 +25,7 @@ VOLUME /usr/src/wordpress
 
 #Call all prior entrypoints
 COPY entrypoint.sh /usr/local/bin/debug-entrypoint.sh
-ENTRYPOINT [ "/usr/local/bin/docker-entrypoint.sh", "/usr/local/bin/my-entrypoint.sh", "debug-entrypoint.sh" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh", "debug-entrypoint.sh" ]
 
 #Override NGINX Https redirect
 COPY vhost.conf /etc/nginx/conf.d/
