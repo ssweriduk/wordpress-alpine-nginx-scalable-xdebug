@@ -26,10 +26,12 @@ RUN mv /usr/src/wordpress /usr/src/wordpress_bak \
 #Expose wordpress source code for debugger to read
 VOLUME /usr/src/wordpress
 
+#Call all prior entrypoints
 COPY entrypoint.sh /usr/local/bin/debug-entrypoint.sh
-ENTRYPOINT [ "/usr/local/bin/entrypoint.sh", "debug-entrypoint.sh" ]
+ENTRYPOINT [ "/usr/local/bin/docker-entrypoint.sh", "/usr/local/bin/my-entrypoint.sh", "debug-entrypoint.sh" ]
 
-
+#Override NGINX Https redirect
+COPY vhost.conf /etc/nginx/conf.d/
 
 #XDebug install & configure
 RUN pecl channel-update pecl.php.net \
@@ -38,7 +40,6 @@ RUN pecl channel-update pecl.php.net \
 
 #Development configuration copy
 COPY xdebug.ini /usr/local/etc/php/conf.d/
-COPY opcache-invalidate.ini /usr/local/etc/php/conf.d/
-COPY display-errors.ini /usr/local/etc/php/conf.d/
+COPY php.ini /usr/local/etc/php/conf.d/
 
 CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
